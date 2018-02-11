@@ -1,0 +1,16 @@
+{
+	"name": "varrcan/telegram.send",
+	"description": "Sending Bitrix messages to telegram",
+	"keywords": ["bitrix", "telegram"],
+	"type": "bitrix-d7-module",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Sergey Voloshin (Varrcan)",
+			"email": "git@varrcan.me"
+		}
+	],
+	"require": {
+		"composer/installers": ">=1.0.22 <2.0"
+	}
+}
