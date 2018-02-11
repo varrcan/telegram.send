@@ -1,8 +1,8 @@
 {
 	"name": "varrcan/telegram.send",
 	"description": "Sending Bitrix messages to telegram",
-	"keywords": ["bitrix", "telegram"],
-	"type": "bitrix-d7-module",
+	"keywords": ["bitrix-module", "telegram"],
+	"type": "bitrix-module",
 	"license": "MIT",
 	"authors": [
 		{
