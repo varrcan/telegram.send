@@ -27,7 +27,7 @@ class Main {
 					}
 					(new Sending)->processMessage($message);
 				} catch (\Exception $e) {
-					Debug::writeToFile($e->getMessage(), 'getEventSend', 'log');
+					Debug::writeToFile($e->getMessage(), 'getEventSend', 'telegram-log');
 				}
 			}
 		}

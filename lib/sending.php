@@ -65,7 +65,7 @@ class Sending {
 			CURLOPT_RETURNTRANSFER => true,
 			CURLOPT_CONNECTTIMEOUT => 5,
 			CURLOPT_TIMEOUT        => 30,
-			CURLOPT_POST        => true,
+			CURLOPT_POST           => true,
 		];
 		curl_setopt_array($handle, $options);
 
