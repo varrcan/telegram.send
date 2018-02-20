@@ -1,14 +1,15 @@
 <?php
 defined('B_PROLOG_INCLUDED') and (B_PROLOG_INCLUDED === true) or die();
 
+use Bitrix\Main\Application;
 use Bitrix\Main\EventManager;
 use Bitrix\Main\ModuleManager;
-use Bitrix\Main\Application;
 
 /**
  * Class telegram_send
  */
-Class telegram_send extends CModule {
+Class telegram_send extends CModule
+{
 
 	const MODULE_ID = 'telegram.send';
 	public $MODULE_ID;
@@ -24,7 +25,7 @@ Class telegram_send extends CModule {
 	/**
 	 * telegram_send constructor.
 	 */
-	public function __construct () {
+	public function __construct() {
 		$arModuleVersion = [];
 		include(dirname(__FILE__) . "/version.php");
 		$this->MODULE_NAME         = "Телеграм";
@@ -41,7 +42,7 @@ Class telegram_send extends CModule {
 	 * Действия при установке модуля
 	 * @return bool|void
 	 */
-	public function doInstall () {
+	public function doInstall() {
 		global $USER;
 		if ($USER->IsAdmin()) {
 			ModuleManager::registerModule($this->MODULE_ID);
@@ -53,7 +54,7 @@ Class telegram_send extends CModule {
 	/**
 	 * Действия при удалении модуля
 	 */
-	public function doUninstall () {
+	public function doUninstall() {
 		$this->UnInstallEvents();
 		$this->UnInstallFiles();
 		$this->UnInstallDB();
@@ -64,7 +65,7 @@ Class telegram_send extends CModule {
 	 * Регистрация событий
 	 * @return bool|void
 	 */
-	public function InstallEvents () {
+	public function InstallEvents() {
 		$eventManager = EventManager::getInstance();
 		$eventManager->registerEventHandler(
 			'main',
@@ -79,7 +80,7 @@ Class telegram_send extends CModule {
 	 * Копирование файлов
 	 * @param array $arParams
 	 */
-	public function InstallFiles ($arParams = []) {
+	public function InstallFiles($arParams = []) {
 		if (!is_dir($_SERVER['DOCUMENT_ROOT'] . '/bitrix/js/' . self::MODULE_ID)) {
 			mkdir($_SERVER['DOCUMENT_ROOT'] . '/bitrix/js/' . self::MODULE_ID);
 		}
@@ -87,19 +88,21 @@ Class telegram_send extends CModule {
 			$_SERVER['DOCUMENT_ROOT'] . '/bitrix/modules/' . self::MODULE_ID . '/install/admin',
 			$_SERVER['DOCUMENT_ROOT'] . '/bitrix/admin',
 			true,
-			true);
+			true
+		);
 		CopyDirFiles(
 			$_SERVER['DOCUMENT_ROOT'] . '/bitrix/modules/' . self::MODULE_ID . '/install/js/',
 			$_SERVER['DOCUMENT_ROOT'] . '/bitrix/js/',
 			true,
-			true);
+			true
+		);
 	}
 
 	/**
 	 * Удаление событий
 	 * @return bool|void
 	 */
-	public function UnInstallEvents () {
+	public function UnInstallEvents() {
 
 		$eventManager = EventManager::getInstance();
 		$eventManager->unRegisterEventHandler(
@@ -107,14 +110,15 @@ Class telegram_send extends CModule {
 			'OnBeforeEventSend',
 			$this->MODULE_ID,
 			'Telegram\\Send\\Main',
-			'getEventSend');
+			'getEventSend'
+		);
 	}
 
 	/**
 	 * Удаление файлов
 	 * @return bool|void
 	 */
-	public function UnInstallFiles () {
+	public function UnInstallFiles() {
 		DeleteDirFilesEx("/bitrix/admin/telegram_main.php");
 		DeleteDirFilesEx("/bitrix/js/telegram.send/");
 	}
@@ -125,8 +129,7 @@ Class telegram_send extends CModule {
 	 * @return bool|void
 	 * @throws \Bitrix\Main\Db\SqlQueryException
 	 */
-	public function UnInstallDB ($arParams = []) {
+	public function UnInstallDB($arParams = []) {
 		Application::getConnection()->query("DELETE FROM b_option WHERE `MODULE_ID`='{$this->MODULE_ID}'");
 	}
-
 }

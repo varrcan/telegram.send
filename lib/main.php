@@ -9,7 +9,8 @@ use Bitrix\Main\SiteTable;
  * Class Main
  * @package Telegram\Send
  */
-class Main {
+class Main
+{
 
 	/**
 	 * Действие после отправки письма
@@ -17,7 +18,7 @@ class Main {
 	 * @param $arFields
 	 * @param $arTemplate
 	 */
-	static function getEventSend(&$arFields, &$arTemplate) {
+	public static function getEventSend(&$arFields, &$arTemplate) {
 		if ($arFields && $arTemplate && Config::statusModule() == 1) {
 			if (in_array($arTemplate['EVENT_NAME'], Config::getMail())) {
 				try {
@@ -39,7 +40,7 @@ class Main {
 	 *
 	 * @return mixed
 	 */
-	static function delTags($text) {
+	public static function delTags($text) {
 		return str_replace('&nbsp;', ' ', preg_replace('/\s{2,}/', "\n", strip_tags($text)));
 	}
 
@@ -48,7 +49,7 @@ class Main {
 	 *
 	 * @return array
 	 */
-	static function getSiteParam() {
+	public static function getSiteParam() {
 		$defaultParam = [];
 		$getParam = SiteTable::getList([
 			'select' => ['EMAIL', 'NAME', 'SERVER_NAME'],
@@ -65,5 +66,4 @@ class Main {
 
 		return $defaultParam;
 	}
-
 } //

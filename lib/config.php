@@ -10,7 +10,8 @@ use Bitrix\Main\Mail\Internal\EventTypeTable;
  * Class Config
  * @package Telegram\Send
  */
-class Config {
+class Config
+{
 
 	public static $module_id = 'telegram.send';
 	public static $request;
@@ -22,7 +23,7 @@ class Config {
 	/**
 	 * Request
 	 */
-	static function processRequest() {
+	public static function processRequest() {
 		self::$request = Context::getCurrent()->getRequest();
 		$funcName = self::$request->getPost('funcName');
 		if ($funcName) {
@@ -35,7 +36,7 @@ class Config {
 	 *
 	 * @return array
 	 */
-	static function getMailTemplates() {
+	public static function getMailTemplates() {
 		$getRow = EventTypeTable::getList([
 			'select' => ['ID', 'EVENT_NAME', 'NAME'],
 			'filter' => ['=LID' => LANGUAGE_ID],
@@ -48,7 +49,7 @@ class Config {
 	/**
 	 * Получение входящих запросов
 	 */
-	static function getUpdates() {
+	public static function getUpdates() {
 		$arReturn = [];
 		$arUpdates = (new Sending)->updatesUser()[0];
 
@@ -70,7 +71,7 @@ class Config {
 	/**
 	 * Добавление пользователя
 	 */
-	static function setUser() {
+	public static function setUser() {
 		$fields = self::$request->getPost('fields');
 		if ($fields) {
 			$savedUser = self::getUser();
@@ -97,7 +98,7 @@ class Config {
 	/**
 	 * Удаление пользователя
 	 */
-	static function deleteUser() {
+	public static function deleteUser() {
 		$fields = self::$request->getPost('fields');
 		if ($fields) {
 			$savedUser = self::getUser();
@@ -117,7 +118,7 @@ class Config {
 	/**
 	 * Сохранение настроек
 	 */
-	static function saveConfig() {
+	public static function saveConfig() {
 		$fields = self::$request->getPost('fields');
 		if ($fields) {
 			foreach ($fields as $field => $value) {
@@ -142,7 +143,7 @@ class Config {
 	 *
 	 * @return string
 	 */
-	static function statusModule() {
+	public static function statusModule() {
 		return Option::get(self::$module_id, "module_on");
 	}
 
@@ -151,7 +152,7 @@ class Config {
 	 *
 	 * @return string
 	 */
-	static function getToken() {
+	public static function getToken() {
 		return Option::get(self::$module_id, "token");
 	}
 
@@ -160,7 +161,7 @@ class Config {
 	 *
 	 * @return mixed
 	 */
-	static function getUser() {
+	public static function getUser() {
 		return unserialize(Option::get(self::$module_id, "user"));
 	}
 
@@ -169,7 +170,7 @@ class Config {
 	 *
 	 * @return mixed
 	 */
-	static function getMail() {
+	public static function getMail() {
 		return unserialize(Option::get(self::$module_id, "mail"));
 	}
 
@@ -179,7 +180,7 @@ class Config {
 	 * @param      $option
 	 * @param bool $serialize
 	 */
-	static function setOption($name, $option, $serialize = true) {
+	public static function setOption($name, $option, $serialize = true) {
 		Option::set(self::$module_id, $name, $serialize ? serialize($option) : $option);
 	}
 
@@ -190,16 +191,15 @@ class Config {
 	 *
 	 * @return string
 	 */
-	static function setNote($message, $type) {
+	public static function setNote($message, $type) {
 		return (new \CAdminMessage(["MESSAGE" => $message, "TYPE" => $type]))->Show();
 	}
 
 	/**
 	 * Отправка json ответа
 	 */
-	static function sendResponse() {
+	public static function sendResponse() {
 		header('Content-Type: application/json');
 		die(json_encode(self::$response));
 	}
-
 } //

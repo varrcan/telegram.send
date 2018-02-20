@@ -6,7 +6,8 @@ namespace Telegram\Send;
  * Class Sending
  * @package Telegram\Send
  */
-class Sending {
+class Sending
+{
 
 	private $apiKey;
 	private $chatId;
@@ -78,7 +79,7 @@ class Sending {
 	 *
 	 * @return mixed
 	 */
-	function execCurlRequest($handle) {
+	public function execCurlRequest($handle) {
 		$response = curl_exec($handle);
 
 		if (intval(curl_getinfo($handle, CURLINFO_HTTP_CODE)) == 200) {
@@ -89,5 +90,4 @@ class Sending {
 
 		return $response;
 	}
-
 } //

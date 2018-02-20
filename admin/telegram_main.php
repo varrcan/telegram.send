@@ -64,7 +64,7 @@ Asset::getInstance()->addJs("/bitrix/js/telegram.send/telegram_send.js");
 							</td>
 							<td class="adm-detail-content-cell-r">
 								<select name="mail[]" class="mail" title="" size="<?=count($mailTemplates)?>" multiple>
-									<?php foreach ($mailTemplates as $item): ?>
+									<?php foreach ($mailTemplates as $item) : ?>
 										<option value="<?=$item['EVENT_NAME'];?>"
 											<?=in_array($item['EVENT_NAME'], Config::getMail()) ? 'selected' : '';?>>
 											<?=$item['NAME'];?>
@@ -103,11 +103,11 @@ Asset::getInstance()->addJs("/bitrix/js/telegram.send/telegram_send.js");
 										<td class="heading"><b>Имя</b></td>
 										<td class="heading"><b>Действия</b></td>
 									</tr>
-									<?php if ($registerUser):?>
+									<?php if ($registerUser) : ?>
 										<tr>
 											<td colspan="6">Зарегистрированные пользователи</td>
 										</tr>
-										<?php foreach ($registerUser as $id => $val):?>
+										<?php foreach ($registerUser as $id => $val) : ?>
 											<tr class="register_user" id="<?=$id?>">
 												<td><?=$id?></td>
 												<td><?=$val['nickname']?></td>
