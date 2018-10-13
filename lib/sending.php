@@ -67,7 +67,7 @@ class Sending
     public function execCurlRequest($handle)
     {
         $response = curl_exec($handle);
-        if (intval(curl_getinfo($handle, CURLINFO_HTTP_CODE)) == 200) {
+        if ((int)curl_getinfo($handle, CURLINFO_HTTP_CODE) === 200) {
             $response = json_decode($response, true)['result'];
         } else {
             curl_close($handle);
@@ -88,8 +88,8 @@ class Sending
     {
         $paramRequest = ['offset' => $offset, 'limit' => $limit];
         $this->arUpdates = $this->apiRequest('getUpdates', $paramRequest);
-        if (count($this->arUpdates) >= 1) {
-            $lastElementId = $this->arUpdates[count($this->arUpdates) - 1]['update_id'] + 1;
+        if (\count($this->arUpdates) >= 1) {
+            $lastElementId = $this->arUpdates[\count($this->arUpdates) - 1]['update_id'] + 1;
             $paramRequest = ['offset' => $lastElementId, 'limit' => '1'];
             $this->apiRequest('getUpdates', $paramRequest);
         }

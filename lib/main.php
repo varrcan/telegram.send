@@ -20,7 +20,7 @@ class Main
     public static function getEventSend(&$arFields, &$arTemplate)
     {
         if ($arFields && $arTemplate && Config::statusModule() == 1) {
-            if (in_array($arTemplate['EVENT_NAME'], Config::getMail())) {
+            if (\in_array($arTemplate['EVENT_NAME'], Config::getMail(), true)) {
                 try {
                     $message = self::delTags($arTemplate['MESSAGE']);
                     foreach ($arFields + self::getSiteParam() as $key => $field) {
@@ -50,7 +50,7 @@ class Main
      * Получение стандартных полей письма
      * @return array
      */
-    public static function getSiteParam()
+    public static function getSiteParam():array
     {
         $defaultParam = [];
         $getParam = SiteTable::getList([

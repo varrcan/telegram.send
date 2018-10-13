@@ -35,7 +35,7 @@ class Config
      * Получение всех почтовых шаблонов
      * @return array
      */
-    public static function getMailTemplates()
+    public static function getMailTemplates():array
     {
         $getRow = EventTypeTable::getList([
             'select' => ['ID', 'EVENT_NAME', 'NAME'],
@@ -53,7 +53,7 @@ class Config
     {
         $arReturn = [];
         $arUpdates = (new Sending)->updatesUser()[0];
-        if ($arUpdates['message']['text'] == '/start' && $arUpdates['message']['chat']['id']) {
+        if ($arUpdates['message']['text'] === '/start' && $arUpdates['message']['chat']['id']) {
             $arUsers = self::getUser();
             if (!array_key_exists($arUpdates['message']['chat']['id'], $arUsers)) {
                 $arReturn = $arUpdates['message']['chat'];
@@ -83,9 +83,9 @@ class Config
      *
      * @return string
      */
-    public static function setNote($message, $type)
+    public static function setNote($message, $type):string
     {
-        return (new \CAdminMessage(["MESSAGE" => $message, "TYPE" => $type]))->Show();
+        return (new \CAdminMessage(['MESSAGE' => $message, 'TYPE' => $type]))->Show();
     }
 
     /**
@@ -113,7 +113,7 @@ class Config
                     ]
                 ];
                 if ($savedUser) {
-                    $newUser = $newUser + $savedUser;
+                    $newUser += $savedUser;
                 }
                 self::setOption('user', $newUser);
                 self::$response['message'] = self::setNote('Пользователь добавлен', 'OK');
@@ -163,7 +163,7 @@ class Config
         $fields = self::$request->getPost('fields');
         if ($fields) {
             foreach ($fields as $field => $value) {
-                if (is_array($value)) {
+                if (\is_array($value)) {
                     self::setOption($field, $value);
                 } else {
                     self::setOption($field, $value, false);
@@ -184,7 +184,7 @@ class Config
      */
     public static function statusModule()
     {
-        return Option::get(self::$module_id, "module_on");
+        return Option::get(self::$module_id, 'module_on');
     }
 
     /**
@@ -193,7 +193,7 @@ class Config
      */
     public static function getToken()
     {
-        return Option::get(self::$module_id, "token");
+        return Option::get(self::$module_id, 'token');
     }
 
     /**
@@ -202,6 +202,6 @@ class Config
      */
     public static function getMail()
     {
-        return unserialize(Option::get(self::$module_id, "mail"));
+        return unserialize(Option::get(self::$module_id, 'mail'));
     }
 } //

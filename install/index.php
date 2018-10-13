@@ -27,12 +27,12 @@ Class telegram_send extends CModule
     public function __construct()
     {
         $arModuleVersion = [];
-        include(dirname(__FILE__) . "/version.php");
-        $this->MODULE_NAME = "Телеграм";
-        $this->MODULE_DESCRIPTION = "Отправка почтовых сообщений в телеграм";
+        include __DIR__ . '/version.php';
+        $this->MODULE_NAME = 'Телеграм';
+        $this->MODULE_DESCRIPTION = 'Отправка почтовых сообщений в телеграм';
         $this->MODULE_ID = 'telegram.send';
-        $this->MODULE_VERSION = $arModuleVersion["VERSION"];
-        $this->MODULE_VERSION_DATE = $arModuleVersion["VERSION_DATE"];
+        $this->MODULE_VERSION = $arModuleVersion['VERSION'];
+        $this->MODULE_VERSION_DATE = $arModuleVersion['VERSION_DATE'];
         $this->MODULE_GROUP_RIGHTS = 'N';
         $this->PARTNER_NAME = 'Varrcan';
         $this->PARTNER_URI = 'https://varrcan.me';
@@ -75,8 +75,9 @@ Class telegram_send extends CModule
      */
     public function InstallFiles($arParams = [])
     {
-        if (!is_dir($_SERVER['DOCUMENT_ROOT'] . '/bitrix/js/' . self::MODULE_ID)) {
-            mkdir($_SERVER['DOCUMENT_ROOT'] . '/bitrix/js/' . self::MODULE_ID);
+        if (!is_dir($_SERVER['DOCUMENT_ROOT'] . '/bitrix/js/' . self::MODULE_ID) && !mkdir($concurrentDirectory =
+                $_SERVER['DOCUMENT_ROOT'] . '/bitrix/js/' . self::MODULE_ID) && !is_dir($concurrentDirectory)) {
+                    throw new \RuntimeException(sprintf('Directory "%s" was not created', $concurrentDirectory));
         }
         CopyDirFiles(
             $_SERVER['DOCUMENT_ROOT'] . '/bitrix/modules/' . self::MODULE_ID . '/install/admin',
