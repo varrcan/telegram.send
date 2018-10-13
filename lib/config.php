@@ -72,7 +72,7 @@ class Config
      */
     public static function getUser()
     {
-        return unserialize(Option::get(self::$module_id, "user"));
+        return unserialize(Option::get(self::$module_id, 'user'));
     }
 
     /**
@@ -182,7 +182,7 @@ class Config
      * Активность модуля
      * @return string
      */
-    public static function statusModule()
+    public static function statusModule():string
     {
         return Option::get(self::$module_id, 'module_on');
     }
@@ -191,7 +191,7 @@ class Config
      * Токен бота
      * @return string
      */
-    public static function getToken()
+    public static function getToken():string
     {
         return Option::get(self::$module_id, 'token');
     }
@@ -203,5 +203,23 @@ class Config
     public static function getMail()
     {
         return unserialize(Option::get(self::$module_id, 'mail'));
+    }
+
+    /**
+     * Активность прокси
+     * @return mixed
+     */
+    public static function statusProxy()
+    {
+        return Option::get(self::$module_id, 'proxy_on');
+    }
+
+    /**
+     * Данные прокси
+     * @return mixed
+     */
+    public static function proxyData()
+    {
+        return unserialize(Option::get(self::$module_id, 'proxy'));
     }
 } //

@@ -26,6 +26,14 @@ jQuery(document).ready(function () {
         }
     })
 
+    $('.proxy_on:checkbox').on('change', function () {
+        if (this.checked) {
+            $(this).val('1')
+        } else {
+            $(this).val('0')
+        }
+    })
+
     // Сохранение настроек
     $('#save').click(function (event) {
         event.preventDefault()
@@ -42,7 +50,14 @@ jQuery(document).ready(function () {
                     module_on: $('.module_on').val(),
                     name_bot: $('.name_bot').val(),
                     token: $('.token').val(),
-                    mail: $('.mail').val()
+                    mail: $('.mail').val(),
+                    proxy_on: $('.proxy_on').val(),
+                    proxy: {
+                        url: $('.proxy_url').val(),
+                        port: $('.proxy_port').val(),
+                        user: $('.proxy_user').val(),
+                        pass: $('.proxy_pass').val()
+                    }
                 }
             }
         }).done(function (data) {
@@ -95,19 +110,14 @@ jQuery(document).ready(function () {
     })
 
     // Переключение табов
-    $('#tab-setting').click(function (event) {
-        event.preventDefault()
-        $(this).addClass('adm-detail-tab-active')
-        $('#tab-user').removeClass('adm-detail-tab-active')
-        $('#wrap-setting').fadeIn(500)
-        $('#wrap-user').removeClass('adm-detail-tab-active').fadeOut(0)
-    })
-    $('#tab-user').click(function (event) {
-        event.preventDefault()
-        $(this).addClass('adm-detail-tab-active')
-        $('#tab-setting').removeClass('adm-detail-tab-active')
-        $('#wrap-user').fadeIn(500)
-        $('#wrap-setting').fadeOut(0)
+    $('.adm-detail-tabs-block span').click(function() {
+        var click_id=$(this).attr('id');
+        if (click_id !== $('.adm-detail-tabs-block span.adm-detail-tab-active').attr('id') ) {
+            $('.adm-detail-tabs-block span').removeClass('adm-detail-tab-active');
+            $(this).addClass('adm-detail-tab-active');
+            $('.adm-detail-content').fadeOut(0);
+            $('#wrap-' + click_id).fadeIn(500);
+        }
     })
 
 })
